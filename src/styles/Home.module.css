@@ -1,0 +1,65 @@
+.container {
+  min-height: 100vh;
+  background: #FFFFFF; /* White background */
+}
+
+.header {
+  padding: 10px;
+  background: #3B5998; /* Facebook blue */
+  border-bottom: 1px solid #29487D; /* Darker blue border */
+}
+
+.headerTitle {
+  margin: 0;
+  font-size: 20px; /* Slightly smaller than modern headers */
+  color: #FFFFFF; /* White text on blue */
+  font-weight: bold;
+}
+
+.main {
+  padding: 15px;
+  max-width: 800px; /* Narrower content width like 2007 */
+  margin: 0 0 0 20px; /* Left-aligned with slight margin */
+}
+
+.form {
+  margin-bottom: 15px;
+}
+
+.field {
+  margin-bottom: 10px;
+}
+
+.label {
+  display: block;
+  font-size: 13px; /* Smaller, utilitarian text */
+  color: #000000; /* Black text */
+  margin-bottom: 5px;
+}
+
+.input {
+  padding: 5px;
+  border: 1px solid #CCCCCC; /* Light gray border */
+  font-size: 13px;
+  background: #FFFFFF; /* White input background */
+  color: #000000; /* Black text */
+}
+
+.formError {
+  color: #333333; /* Dark gray, consistent with app */
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.button {
+  padding: 5px 10px;
+  background: #3B5998; /* Facebook blue */
+  color: #FFFFFF; /* White text */
+  border: 1px solid #29487D; /* Darker blue border */
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #2A4373; /* Slightly darker blue on hover */
+}

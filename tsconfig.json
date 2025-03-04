@@ -18,8 +18,9 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",           // Set the root directory for imports
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]         // Map `@/` to the root directory
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
