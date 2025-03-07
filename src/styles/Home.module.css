@@ -1,25 +1,52 @@
 .container {
   min-height: 100vh;
-  background: #FFFFFF; /* White background */
+  background: #EAF0F6;
+  display: flex; /* Make container a flexbox */
+  flex-direction: column; /* Stack children vertically */
 }
 
 .header {
   padding: 10px;
-  background: #3B5998; /* Facebook blue */
-  border-bottom: 1px solid #29487D; /* Darker blue border */
+  background: #176274;
+  border-bottom: 1px solid #114C5A;
 }
 
 .headerTitle {
   margin: 0;
-  font-size: 20px; /* Slightly smaller than modern headers */
-  color: #FFFFFF; /* White text on blue */
+  font-size: 20px;
+  color: #FFFFFF;
   font-weight: bold;
+}
+
+.headerTagline {
+  margin: 5px 0 0 0;
+  font-size: 13px;
+  color: #C3E0E8;
 }
 
 .main {
   padding: 15px;
-  max-width: 800px; /* Narrower content width like 2007 */
-  margin: 0 0 0 20px; /* Left-aligned with slight margin */
+  width: 80%;
+  margin: 0 0 0 40px;
+  display: flex;
+  flex: 1; /* Allow main to expand and push footer down */
+}
+
+.contentWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.formWrapper {
+  flex: 1;
+  max-width: 800px;
+}
+
+.instruction {
+  font-size: 13px;
+  color: #1E3A8A;
+  margin-bottom: 10px;
 }
 
 .form {
@@ -30,36 +57,65 @@
   margin-bottom: 10px;
 }
 
-.label {
-  display: block;
-  font-size: 13px; /* Smaller, utilitarian text */
-  color: #000000; /* Black text */
-  margin-bottom: 5px;
-}
-
 .input {
   padding: 5px;
-  border: 1px solid #CCCCCC; /* Light gray border */
+  border: 1px solid #CCCCCC;
   font-size: 13px;
-  background: #FFFFFF; /* White input background */
-  color: #000000; /* Black text */
+  background: #FFFFFF;
+  color: #1E3A8A;
+  width: 200px;
 }
 
 .formError {
-  color: #333333; /* Dark gray, consistent with app */
+  color: #1E3A8A;
   font-size: 13px;
   margin-bottom: 10px;
 }
 
 .button {
   padding: 5px 10px;
-  background: #3B5998; /* Facebook blue */
-  color: #FFFFFF; /* White text */
-  border: 1px solid #29487D; /* Darker blue border */
+  background: #176274;
+  color: #FFFFFF;
+  border: 1px solid #114C5A;
   font-size: 13px;
   cursor: pointer;
 }
 
 .button:hover {
-  background: #2A4373; /* Slightly darker blue on hover */
+  background: #114C5A;
+}
+
+.sidebar {
+  flex: 0 0 250px;
+  margin-left: auto;
+  padding-right: 15px;
+}
+
+.sidebarTitle {
+  font-size: 16px;
+  color: #176274;
+  margin-bottom: 10px;
+}
+
+.sidebarList {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.sidebarItem {
+  font-size: 13px;
+  color: #1E3A8A;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.footer {
+  padding: 10px;
+  text-align: center;
+}
+
+.footerText {
+  font-size: 12px;
+  color: #1E3A8A;
 }

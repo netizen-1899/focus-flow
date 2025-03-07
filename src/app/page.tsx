@@ -52,7 +52,7 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) {
-      setError('No file selected'); // This message will use .formError styling
+      setError('No file selected');
       return;
     }
 
@@ -86,23 +86,44 @@ export default function Home() {
     <div className={styles.container}>
       <header className={styles.header}>
         <h1 className={styles.headerTitle}>Focus Flow</h1>
+        <p className={styles.headerTagline}>Prioritize your Jira tasks effortlessly</p>
       </header>
       <main className={styles.main}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.field}>
-            <label className={styles.label}>Upload Jira CSV</label>
-            <input
-              type="file"
-              accept=".csv"
-              onChange={handleFileChange}
-              className={styles.input}
-            />
+        <div className={styles.contentWrapper}>
+          <div className={styles.formWrapper}>
+            <p className={styles.instruction}>Upload a CSV exported from JIRA to see your prioritized task flow</p>
+            <form onSubmit={handleSubmit} className={styles.form}>
+              <div className={styles.field}>
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileChange}
+                  className={styles.input}
+                  placeholder="Choose a CSV file"
+                />
+              </div>
+              {error && <p className={styles.formError}>{error}</p>}
+              <button type="submit" className={styles.button}>Submit</button>
+            </form>
+            <div className={styles.taskListWrapper}>
+              <TaskList tasks={tasks} />
+            </div>
           </div>
-          {error && <p className={styles.formError}>{error}</p>}
-          <button type="submit" className={styles.button}>Submit</button>
-        </form>
-        <TaskList tasks={tasks} />
+          <aside className={styles.sidebar}>
+            <h2 className={styles.sidebarTitle}>About Focus Flow</h2>
+            <ul className={styles.sidebarList}>
+              <li className={styles.sidebarItem}>Manage your workflow by turning your tasks into a prioritized action plan.</li>
+              <li className={styles.sidebarItem}>Upload tasks assigned to you in the form of a csv file and let our smart algorithm sort tasks based on urgency, importance, and effort.</li>
+              <li className={styles.sidebarItem}>Stay organized, meet deadlines, and boost productivity with a clear task flow.</li>
+              <li className={styles.sidebarItem}>No data is stored on our servers, all calculations are done on your device.</li>
+              <li className={styles.sidebarItem}>Focus Flow currently only supports JIRA exports, we will be adding more integrations soon.</li>
+            </ul>
+          </aside>
+        </div>
       </main>
+      <footer className={styles.footer}>
+        <p className={styles.footerText}>© 2025 Focus Flow. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

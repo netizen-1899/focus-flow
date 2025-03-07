@@ -1,18 +1,18 @@
 .container {
   padding: 15px;
-  background: #FFFFFF; /* White background */
+  background: #FFFFFF;
 }
 
 .containerTitle {
   margin-bottom: 10px;
-  font-size: 16px; /* Smaller, functional header */
-  color: #3B5998; /* Blue for headers */
+  font-size: 16px;
+  color: #3B5998;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #CCCCCC; /* Thin gray border */
+  border: 1px solid #CCCCCC;
 }
 
 .table th,
@@ -20,24 +20,48 @@
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #CCCCCC;
-  color: #000000; /* Black text for readability */
+  color: #000000;
 }
 
 .table th {
-  background: #ECEFF5; /* Light blue-gray header background */
+  background: #ECEFF5;
   font-weight: bold;
-  color: #3B5998; /* Blue text for headers */
+  color: #3B5998;
+}
+
+.table th:nth-child(1) { /* Issue Key */
+  width: 15%;
+}
+
+.table th:nth-child(2) { /* Task Name */
+  width: 30%;
+}
+
+.table th:nth-child(3) { /* Priority */
+  width: 15%;
+}
+
+.table th:nth-child(4) { /* Due Date */
+  width: 15%;
+}
+
+.table th:nth-child(5) { /* Effort (Hours) */
+  width: 15%;
+}
+
+.table th:nth-child(6) { /* Priority Score */
+  width: 10%;
 }
 
 .priorityDot {
   display: inline-block;
   width: 10px;
   height: 10px;
-  border-radius: 0; /* Square dots, less modern */
+  border-radius: 0;
   margin-right: 5px;
 }
 
 .noTasks {
-  color: #333333; /* Dark gray for consistency */
+  color: #333333;
   font-size: 13px;
 }
