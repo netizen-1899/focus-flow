@@ -107,7 +107,7 @@
   font-size: 13px;
   color: #1E3A8A;
   line-height: 1.6;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .footer {
@@ -118,4 +118,18 @@
 .footerText {
   font-size: 12px;
   color: #1E3A8A;
+}
+
+/* Add these styles to the existing Home.module.css file */
+
+.downloadLink {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #176274;
+  text-decoration: none;
+}
+
+.downloadLink:hover {
+  color: #114C5A;
 }

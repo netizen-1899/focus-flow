@@ -28,6 +28,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
             <th>Priority</th>
             <th>Due Date</th>
             <th>Effort (Hours)</th>
+            <th>Story Points</th>
             <th>Priority Score</th>
           </tr>
         </thead>
@@ -45,6 +46,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
               </td>
               <td>{task.dueDate}</td>
               <td>{task.effortHours.toFixed(1)}</td>
+              <td>{task.storyPoints}</td>
               <td>{task.priorityScore.toFixed(1)}</td>
             </tr>
           ))}

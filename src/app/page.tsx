@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Papa from 'papaparse';
+import Papa, { ParseResult } from 'papaparse';
 import TaskList from '@/components/TaskList';
 import styles from '../styles/Home.module.css';
 import { JiraCSVRow, Task } from '@/types/jira';
@@ -16,12 +16,16 @@ export default function Home() {
     const priorityName = task.Priority;
     const timeEstimateSeconds = parseFloat(task['Time Estimate']) || 0;
     const effortHours = timeEstimateSeconds / 3600;
+    const storyPoints = parseFloat(task['Story Points']) || 0;
+    const storyPointsScore = storyPoints * 10;
 
     let urgencyScore = 50;
     if (dueDateStr) {
       const dueDate = new Date(dueDateStr);
-      const daysUntilDue = Math.ceil((dueDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-      urgencyScore = Math.max(0, 100 - daysUntilDue * 10);
+      if (!isNaN(dueDate.getTime())) {
+        const daysUntilDue = Math.ceil((dueDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+        urgencyScore = Math.max(0, 100 - daysUntilDue * 10);
+      }
     }
 
     const priorityMap: { [key: string]: number } = {
@@ -35,7 +39,7 @@ export default function Home() {
 
     const effortScore = effortHours ? Math.max(0, 100 - effortHours * 10) : 50;
 
-    return Math.min(100, Math.max(0, urgencyScore * 0.4 + importanceScore * 0.4 + effortScore * 0.2));
+    return Math.min(100, Math.max(0, urgencyScore * 0.4 + importanceScore * 0.4 + effortScore * 0.2 + storyPointsScore * 0.2));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,29 +55,48 @@ export default function Home() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) {
+    if (!file) { // Assume 'file' is a File object from state
       setError('No file selected');
       return;
     }
-
+  
     Papa.parse<JiraCSVRow>(file, {
-      header: true,
-      dynamicTyping: true,
-      skipEmptyLines: true,
-      complete: (result) => {
-        const parsedTasks = result.data
-          .filter((task) => task['Issue Key'] && task.Summary)
-          .map((task) => ({
+      header: true,          // Maps CSV headers to object keys
+      dynamicTyping: true,   // Converts numeric fields automatically
+      skipEmptyLines: true,  // Ignores empty rows
+      complete: (result: ParseResult<JiraCSVRow>) => {
+        const headers = result.meta.fields || [];
+        const requiredColumns = ['Issue Key', 'Summary', 'Priority', 'Due Date', 'Time Estimate', 'Story Points'];
+  
+        // Check for missing required columns
+        const missingColumns = requiredColumns.filter(col => !headers.includes(col));
+        if (missingColumns.length > 0) {
+          setError(`Missing required columns: ${missingColumns.join(', ')}`);
+          return;
+        }
+  
+        // Process each row with proper typing
+        const parsedTasks: Task[] = result.data.map((row: JiraCSVRow) => {
+          const task = {
+            'Issue Key': row['Issue Key'],
+            'Summary': row['Summary'],
+            'Priority': row['Priority'],
+            'Due Date': row['Due Date'],
+            'Time Estimate': row['Time Estimate'],
+            'Story Points': row['Story Points'],
+          };
+          return {
             issueKey: task['Issue Key'],
-            taskName: task.Summary,
-            priority: task.Priority || 'Medium',
+            taskName: task['Summary'],
+            priority: task['Priority'] || 'Medium',
             dueDate: task['Due Date'] || 'N/A',
-            effortHours: (parseFloat(task['Time Estimate']) || 0) / 3600,
-            priorityScore: calculatePriorityScore(task),
-          }))
-          .sort((a, b) => b.priorityScore - a.priorityScore);
-
-        setTasks(parsedTasks);
+            effortHours: (parseFloat(task['Time Estimate'] as unknown as string) || 0) / 3600,
+            storyPoints: parseFloat(task['Story Points']) || 0,
+            priorityScore: calculatePriorityScore(task), // Assume this function exists
+          };
+        }).filter(task => task.issueKey && task.taskName); // Filter out invalid tasks
+  
+        setTasks(parsedTasks.sort((a, b) => b.priorityScore - a.priorityScore));
         setError(null);
       },
       error: (err) => {
@@ -91,7 +114,12 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.contentWrapper}>
           <div className={styles.formWrapper}>
-            <p className={styles.instruction}>Upload a CSV exported from JIRA to see your prioritized task flow</p>
+            <p className={styles.instruction}>
+            Upload a CSV exported from JIRA to see your prioritized task flow
+            </p>
+            <a href="/sample-tasks.csv" download="sample-tasks.csv" className={styles.downloadLink}>
+              Download Sample CSV
+            </a>
             <form onSubmit={handleSubmit} className={styles.form}>
               <div className={styles.field}>
                 <input
