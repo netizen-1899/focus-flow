@@ -1,22 +1,10 @@
 export interface JiraCSVRow {
   'Issue Key': string;
-  'Issue Type': string;
-  Summary: string;
-  Priority: string;
-  Status: string;
-  Assignee: string;
-  Reporter: string;
-  Created: string;
-  Updated: string;
+  'Summary': string;
+  'Priority': string;
   'Due Date': string;
-  Resolution: string;
-  'Project Key': string;
-  'Project Name': string;
   'Time Estimate': string;
-  'Time Spent': string;
-  Labels: string;
-  Description: string;
-  [key: string]: string;
+  'Story Points': string;
 }
 
 export interface Task {
@@ -25,5 +13,6 @@ export interface Task {
   priority: string;
   dueDate: string;
   effortHours: number;
+  storyPoints: number;
   priorityScore: number;
 }
